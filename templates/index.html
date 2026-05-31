@@ -1,13 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <title>Scenario Quiz Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    
-    <script src="static/script.js"></script>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+    <div class="app-container">
+        <!-- Home View -->
+        <div id="home-view" class="view active">
+            <header>
+                <h1>Scenario Simulator</h1>
+                <p>Test your decision-making in real-world situations.</p>
+            </header>
+            
+            <div class="stats-card">
+                <div class="stat">
+                    <span class="stat-value" id="stat-completed">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="stat-score">0</span>
+                    <span class="stat-label">Score</span>
+                </div>
+            </div>
+
+            <button id="start-btn" class="primary-btn pulse" onclick="loadScenario()">Start Simulation</button>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted); opacity: 0.8;">
+                <em>(Please do not abuse the AI or extensively use it. As this is powered by a FREE AI API)</em>
+            </p>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="quiz-view" class="view">
+            <div class="header-bar">
+                <span id="category-badge" class="badge">Category</span>
+                <div class="timer-container">
+                    <div class="timer-bar" id="timer-bar"></div>
+                    <span id="timer-text" class="badge" style="background:var(--wrong-color);color:white;">20s</span>
+                </div>
+                <span class="badge">Score: <span id="live-score">0</span></span>
+                <button id="exit-btn" class="text-btn" onclick="goHome()">Exit</button>
+            </div>
+            
+            <div class="quiz-layout">
+                <div class="quiz-main">
+                    <div class="scenario-card">
+                        <p id="scenario-text" class="scenario-text">Loading scenario...</p>
+                        <p id="question-text" class="question-text">...</p>
+                    </div>
+
+                    <div class="options-container">
+                        <button class="option-btn" data-value="a" onclick="submitAnswer('a')">
+                            <span class="option-label">A</span>
+                            <span id="option-a-text" class="option-text">...</span>
+                        </button>
+                        <button class="option-btn" data-value="b" onclick="submitAnswer('b')">
+                            <span class="option-label">B</span>
+                            <span id="option-b-text" class="option-text">...</span>
+                        </button>
+                        <button class="option-btn" data-value="c" onclick="submitAnswer('c')">
+                            <span class="option-label">C</span>
+                            <span id="option-c-text" class="option-text">...</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="quiz-sidebar">
+                    <div class="log-card">
+                        <h3 style="font-size: 0.9rem; margin-bottom: 10px; color: var(--text-muted);">Session Log</h3>
+                        <div class="log-stat">
+                            <span class="color-box" style="background: var(--good-color);"></span>
+                            <span>Right: <strong id="live-correct">0</strong></span>
+                        </div>
+                        <div class="log-stat">
+                            <span class="color-box" style="background: var(--wrong-color);"></span>
+                            <span>Wrong: <strong id="live-wrong">0</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback View -->
+        <div id="feedback-view" class="view">
+            <div class="feedback-card">
+                <div id="feedback-rating" class="rating-badge">...</div>
+                <p id="feedback-message" class="feedback-message">Analyzing your response...</p>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> <span id="feedback-tip">...</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="continue-btn" class="primary-btn" onclick="loadScenario()">Next Scenario</button>
+                <button id="home-btn" class="secondary-btn" onclick="goHome()">Go Home</button>
+            </div>
+        </div>
+
+        <!-- End View -->
+        <div id="end-view" class="view">
+            <header>
+                <h1>Simulation Complete</h1>
+                <p>Here's how you performed</p>
+            </header>
+            
+            <div class="results-container">
+                <div class="pie-chart-wrapper">
+                    <div id="results-pie" class="pie-chart"></div>
+                    <div class="pie-legend">
+                        <span class="legend-item"><span class="color-box" style="background: var(--good-color);"></span> Correct (<span id="end-correct-count">0</span>)</span>
+                        <span class="legend-item"><span class="color-box" style="background: var(--wrong-color);"></span> Wrong (<span id="end-wrong-count">0</span>)</span>
+                    </div>
+                </div>
+                
+                <div class="ai-summary">
+                    <h3>AI Feedback</h3>
+                    <p id="end-feedback-text">Analyzing your performance...</p>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="restart-btn" class="primary-btn" onclick="restartGame()">Start Over</button>
+            </div>
+        </div>
+        
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>AI is thinking...</p>
+            <div class="progress-bar-container" id="loading-progress-container" style="display: none;">
+                <div class="progress-bar-fill" id="loading-progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

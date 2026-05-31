@@ -1,0 +1,57 @@
+[
+  {
+    "category": "Mental Health",
+    "scenario": "You just got home from school and notice a friend\u2019s story about a new video game they\u2019re excited about. You feel a little bored and think about opening your favorite social\u2011media app.",
+    "question": "What do you do?",
+    "options": {
+      "a": "Leave a comment asking about the game and suggest playing together later \u2013 you\u2019re actively engaging with friends.",
+      "b": "Quickly swipe past the story and close the app \u2013 you avoid getting drawn in, but you also miss a chance to connect.",
+      "c": "Spend the next hour watching endless gaming clips and memes without interacting \u2013 passive scrolling that can make time slip away."
+    },
+    "id": 1
+  },
+  {
+    "category": "Mental Health",
+    "scenario": "While scrolling, you see a trending hashtag about dealing with anxiety. You\u2019ve felt a bit nervous lately and wonder if you should read more about it.",
+    "question": "What do you do?",
+    "options": {
+      "a": "Open a reputable article, take notes, and share a helpful summary with a close friend \u2013 active learning and supportive sharing.",
+      "b": "Notice the hashtag, then continue scrolling through funny memes \u2013 you acknowledge it but stay neutral.",
+      "c": "Binge\u2011watch dozens of personal stories about anxiety without taking breaks \u2013 passive consumption that may increase worry."
+    },
+    "id": 2
+  },
+  {
+    "category": "Mental Health",
+    "scenario": "Your group chat is trying to decide on a weekend activity, but the feed is full of memes and viral videos. You want to help decide but also feel tempted to keep scrolling.",
+    "question": "What do you do?",
+    "options": {
+      "a": "Create a quick poll in the chat so everyone can vote \u2013 an active way to contribute.",
+      "b": "Scroll through a few memes, then later reply with a suggestion \u2013 you stay neutral, still participating later.",
+      "c": "Spend the whole afternoon watching memes and forget to answer the group chat \u2013 passive scrolling that leaves the plan unresolved."
+    },
+    "id": 3
+  },
+  {
+    "category": "Mental Health",
+    "scenario": "A close friend just posted a birthday story. You feel happy for them but also notice a long list of other birthday posts on your feed.",
+    "question": "What do you do?",
+    "options": {
+      "a": "Send a personalized video message and write a thoughtful comment on their story \u2013 active, meaningful interaction.",
+      "b": "Tap \u201cLike\u201d on the birthday post and move on \u2013 a neutral acknowledgment.",
+      "c": "Stare at the post while scrolling through other birthdays, feeling left out and not responding \u2013 passive and potentially harmful to mood."
+    },
+    "id": 4
+  },
+  {
+    "category": "Mental Health",
+    "scenario": "Your teacher assigned a research project due tomorrow, but a new TikTok dance challenge is blowing up. You\u2019re tempted to try it instead of working on the assignment.",
+    "question": "What do you do?",
+    "options": {
+      "a": "Search the platform for a short educational clip related to your topic, take notes, and then start the project \u2013 active use that blends learning with the app.",
+      "b": "Watch a couple of dance videos, then put the phone away and begin your research \u2013 a neutral balance.",
+      "c": "Spend the evening learning the dance and posting your attempts, ignoring the homework \u2013 passive use that delays important work."
+    },
+    "id": 5
+  }
+]
