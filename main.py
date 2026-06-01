@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 # Ill add an API so it can be used on pcs without the ollama app
 OLLAMA_API_KEY = "d8ba93d5e23941bcb48729bf03d74ccb.Q7WNFlPHi1cH92FDBSiYUcuQ"
+# this API key is one-time use only, not usable on other codes. 
 OLLAMA_URL = "https://ollama.com/api/generate"
 
 def call_ollama(prompt, temperature=0.7):
