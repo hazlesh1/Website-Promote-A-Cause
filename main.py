@@ -3,9 +3,10 @@ import random
 import requests
 from flask import Flask, render_template, request, jsonify
 from pydantic import BaseModel
+import os
 
 # Ill add an API so it can be used on pcs without the ollama app
-OLLAMA_API_KEY = "d8ba93d5e23941bcb48729bf03d74ccb.Q7WNFlPHi1cH92FDBSiYUcuQ"
+OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY")
 # this API key is one-time use only, not usable on other codes. 
 OLLAMA_URL = "https://ollama.com/api/generate"
 
