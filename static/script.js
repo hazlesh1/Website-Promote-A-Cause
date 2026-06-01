@@ -13,7 +13,6 @@ const views = {
     end: document.getElementById('end-view')
 };
 
-// Elements
 const loadingOverlay = document.getElementById('loading-overlay');
 const themeToggle = document.getElementById('theme-toggle');
 
@@ -22,14 +21,14 @@ function showView(viewName) {
     views[viewName].classList.add('active');
 }
 
-// Dark Mode Toggle
+// Dark Mode Toggle Thingy
 themeToggle.addEventListener('click', () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     themeToggle.textContent = isDark ? '🌙' : '☀️';
 });
 
-// App Logic
+
 window.addEventListener('DOMContentLoaded', async () => {
     loadingOverlay.querySelector('p').textContent = "Generating scenarios with AI...";
     document.getElementById('loading-progress-container').style.display = 'block';
@@ -73,7 +72,6 @@ function restartGame() {
     showView('home');
 }
 
-// Options event listeners removed (now using inline onclick)
 
 function updateStats() {
     document.getElementById('stat-completed').textContent = completed;
@@ -177,7 +175,6 @@ async function submitAnswer(answer) {
         
         const feedback = await res.json();
         
-        // Update feedback view
         const ratingBadge = document.getElementById('feedback-rating');
         ratingBadge.textContent = feedback.rating;
         ratingBadge.className = `rating-badge rating-${feedback.rating}`;

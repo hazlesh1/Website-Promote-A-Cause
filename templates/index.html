@@ -11,7 +11,6 @@
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
 
     <div class="app-container">
-        <!-- Home View -->
         <div id="home-view" class="view active">
             <header>
                 <h1>Scenario Simulator</h1>
@@ -31,7 +30,7 @@
 
             <button id="start-btn" class="primary-btn pulse" onclick="loadScenario()">Start Simulation</button>
             <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted); opacity: 0.8;">
-                <em>(Please do not abuse the AI or extensively use it. As this is powered by a FREE AI API)</em>
+                <em>(This has a daily usage limit, please do not use too intensively.)</em>
             </p>
         </div>
 
@@ -86,13 +85,12 @@
             </div>
         </div>
 
-        <!-- Feedback View -->
         <div id="feedback-view" class="view">
             <div class="feedback-card">
                 <div id="feedback-rating" class="rating-badge">...</div>
-                <p id="feedback-message" class="feedback-message">Analyzing your response...</p>
+                <p id="feedback-message" class="feedback-message">A few seconds please, let the thing load...</p>
                 <div class="tip-box">
-                    <strong>💡 Tip:</strong> <span id="feedback-tip">...</span>
+                    <strong>Tip:</strong> <span id="feedback-tip">...</span>
                 </div>
             </div>
 
@@ -102,11 +100,10 @@
             </div>
         </div>
 
-        <!-- End View -->
         <div id="end-view" class="view">
             <header>
                 <h1>Simulation Complete</h1>
-                <p>Here's how you performed</p>
+                <p>Your performance:</p>
             </header>
             
             <div class="results-container">
@@ -129,7 +126,6 @@
             </div>
         </div>
         
-        <!-- Loading Overlay -->
         <div id="loading-overlay" class="loading-overlay hidden">
             <div class="spinner"></div>
             <p>AI is thinking...</p>

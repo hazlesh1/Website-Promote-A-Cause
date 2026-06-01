@@ -1,8 +1,34 @@
 import json
 import random
+import requests
 from flask import Flask, render_template, request, jsonify
-import ollama
 from pydantic import BaseModel
+
+# Ill add an API so it can be used on pcs without the ollama app
+OLLAMA_API_KEY = "d8ba93d5e23941bcb48729bf03d74ccb.Q7WNFlPHi1cH92FDBSiYUcuQ"
+OLLAMA_URL = "https://ollama.com/api/generate"
+
+def call_ollama(prompt, temperature=0.7):
+    headers = {
+        "Authorization": f"Bearer {OLLAMA_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": "gpt-oss:120b",
+        "prompt": prompt,
+        "stream": False,
+        "options": {
+            "temperature": temperature
+        }
+    }
+
+    r = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=120)
+    r.raise_for_status()
+
+    data = r.json()
+
+    return data.get("response") or data.get("message", {}).get("content", "")
 
 app = Flask(__name__)
 
@@ -71,14 +97,8 @@ IMPORTANT: You MUST respond STRICTLY with a valid JSON object matching exactly t
 }
 """
     try:
-        response = ollama.chat(
-            model='gpt-oss:120b-cloud',
-            messages=[{'role': 'user', 'content': prompt}],
-            format=ScenarioList.model_json_schema(),
-            options={'temperature': 0.7}
-        )
+        content = call_ollama(prompt, temperature=0.7)
         
-        content = response.message.content.strip()
         if content.startswith("```"):
             content = content.strip("`").strip()
             if content.lower().startswith("json"):
@@ -116,15 +136,11 @@ def end_summary():
     """
     
     try:
-        response = ollama.chat(
-            model='gpt-oss:120b-cloud',
-            messages=[{'role': 'user', 'content': prompt}],
-            options={'temperature': 0.5}
-        )
-        return jsonify({"summary": response.message.content.strip()})
+        response = call_ollama(prompt, temperature=0.5)
+        return jsonify({"summary": response.strip()})
     except Exception as e:
         print(f"Summary error: {e}")
-        return jsonify({"summary": "Great job completing the simulation! Keep practicing to improve your decision-making."})
+        return jsonify({"summary": "Great Job! - personally from Leo"})
 
 @app.route('/api/feedback', methods=['POST'])
 def get_feedback():
@@ -146,28 +162,16 @@ User chose: {answer_text}
 Evaluate the user's choice in the context of healthy teenage social media habits and mental health. 
 Provide a rating ("good", "ok", or "wrong"), an educational feedback message explaining the psychological impact of their choice (e.g., active vs passive scrolling), and a quick actionable tip for healthier screen time.
 You MUST respond STRICTLY with a valid JSON object and nothing else.
-Format: {{"rating": "...", "message": "...", "tip": "..."}}
+Format: {{"rating": "...", "message": "...", "tip": "..."}} 
 """
     
     try:
-        response = ollama.chat(
-            model='gpt-oss:120b-cloud',
-            messages=[{'role': 'user', 'content': prompt}],
-            format=Feedback.model_json_schema(),
-            options={'temperature': 0.3}
-        )
+        content = call_ollama(prompt, temperature=0.3)
         
-        content = response.message.content.strip()
-        if content.startswith("```"):
-            content = content.strip("`").strip()
-            if content.lower().startswith("json"):
-                content = content[4:].strip()
-                
         feedback_data = Feedback.model_validate_json(content)
         return jsonify(feedback_data.model_dump())
     except Exception as e:
         print(f"Ollama Error: {e}")
-        # Fallback response in case AI fails
         return jsonify({
             "rating": "ok",
             "message": "We couldn't generate detailed feedback at this moment.",
